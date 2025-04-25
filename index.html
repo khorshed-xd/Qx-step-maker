@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QX BROKER</title>
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            border: 2px solid #ddd;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 20px;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #007bff;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.1s;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .error {
+            color: #dc3545;
+            font-size: 16px;
+            font-weight: bold;
+            display: none;
+            margin-top: 15px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+            padding: 15px;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            background-color: #e9f7e9;
+        }
+        .community-btn, .dev-btn {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #0069d9;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+        .community-btn:hover, .dev-btn:hover {
+            background-color: #0056b3;
+        }
+        .community-btn:active, .dev-btn:active {
+            transform: scale(0.98);
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                max-width: 90%;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .btn {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- official Chennal -->
+        <a href="https://t.me/qx_brokerr" class="community-btn" target="_blank">OFFICIAL CHENNAL</a>
+        
+        <h1>STEP MAKER</h1>
+
+        <label for="balance">Enter Balance Amount:</label>
+        <input type="number" id="balance" placeholder="Enter your balance" min="1">
+
+        <label for="steps">Enter Step Number:</label>
+        <input type="number" id="steps" placeholder="Enter steps (Min: 5)" min="5">
+
+        <p class="error" id="error-message">শালারপুত যদি ৫ স্টেপের কম নিয়ে খেলিস তাহলে তো লস করবি🤬</p>
+
+        <button class="btn" onclick="calculateSteps()">Make Step</button>
+        <button class="btn" onclick="clearInputs()">Clear</button>
+
+        <div class="result" id="result"></div>
+
+        <!-- Devloper -->
+        <a href="https://t.me/Takemiichiii" class="dev-btn" id="dev-btn" target="_blank"Tᴀᴋᴇᴍɪᴄʜɪ ࿖</a>
+        <a href="https://hgzy.biz/#/register?invitationCode=23356989819" class="dev-btn" id="dev-btn-2" target="_blank">hgzy registration link</a>
+    </div>
+
+    <script>
+        function calculateSteps() {
+            let balance = parseFloat(document.getElementById("balance").value);
+            let steps = parseInt(document.getElementById("steps").value);
+            let errorMessage = document.getElementById("error-message");
+            let resultDiv = document.getElementById("result");
+            let devBtn = document.getElementById("dev-btn");
+            let devBtn2 = document.getElementById("dev-btn-2");
+
+            if (isNaN(balance) || balance <= 0) {
+                alert("Please enter a valid balance amount.");
+                return;
+            }
+            if (steps < 5) {
+                errorMessage.style.display = "block";
+                resultDiv.style.display = "none";
+                devBtn.style.display = "inline-block";
+                devBtn2.style.display = "inline-block";
+                return;
+            } else {
+                errorMessage.style.display = "none";
+            }
+
+            let stepAmounts = [];
+            let totalAmount = 0;
+            let bet = balance / ((2 ** steps) - 1); // Step calculation formula
+
+            for (let i = 1; i <= steps; i++) {
+                let currentStepAmount = bet * (2 ** (i - 1));
+                stepAmounts.push(`${i} Step: ${currentStepAmount.toFixed(2)} tk`);
+                totalAmount += currentStepAmount;
+            }
+
+            resultDiv.innerHTML = `<strong>Your Steps:</strong><br>` + stepAmounts.join("<br>") + 
+                                  `<br><br><strong>Total Used:</strong> ${totalAmount.toFixed(2)} tk`;
+
+            resultDiv.style.display = "block";
+            devBtn.style.display = "inline-block";
+            devBtn2.style.display = "inline-block";
+        }
+
+        function clearInputs() {
+            document.getElementById("balance").value = "";
+            document.getElementById("steps").value = "";
+            document.getElementById("result").style.display = "none";
+            document.getElementById("error-message").style.display = "none";
+            document.getElementById("dev-btn").style.display = "none";
+            document.getElementById("dev-btn-2").style.display = "none";
+        }
+    </script>
+
+
+
+
+</body></html>
